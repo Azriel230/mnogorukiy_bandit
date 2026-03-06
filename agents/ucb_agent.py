@@ -1,21 +1,31 @@
 import numpy as np
 from agents import Agent
 
-
-class GreedyAgent(Agent):
-
-    def __init__(self, k: int):
+class UCBAgent(Agent):
+    def __init__(self, k: int, c: float = 1.4142): # c ~ sqrt(2)
+        self.c = c
         super().__init__(k)
 
 
     def reset(self, seed: int | None = None) -> None:
         super().reset(seed)
+        self.t = 0
 
-    
+
     def select_action(self, t: int) -> int:
-        max_value = np.max(self.values)
-        best_actions = np.where(self.values == max_value)[0]
+        for action in range(self.k):
+            if self.counts[action] == 0:
+                return action
+            
+        ucb_values = np.zeros(self.k)
+        for action in range(self.k):
+            bonus = self.c * np.sqrt(np.log(t) / self.counts[action])
+            ucb_values[action] = self.values[action] + bonus
+
+        ucb_max = np.max(ucb_values)
+        best_actions = np.where(ucb_values == ucb_max)
         action = np.random.choice(best_actions)
+
         return action
     
 
@@ -30,4 +40,4 @@ class GreedyAgent(Agent):
 
 
     def __str__(self) -> str:
-        return f"Greedy"
+        return f"UCB (c={self.c})"

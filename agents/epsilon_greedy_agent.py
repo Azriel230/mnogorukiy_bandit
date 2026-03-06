@@ -32,3 +32,7 @@ class EpsilonGreedyAgent(Agent):
         new_value = old_value + alpha * (reward - old_value)
         
         self.values[action] = new_value
+
+
+    def __str__(self) -> str:
+        return f"ε-Greedy (ε={self.epsilon})"
