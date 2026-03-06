@@ -2,6 +2,7 @@ import numpy as np
 from agents import Agent
 
 class GradientAgent(Agent):
+    
     def __init__(self, k: int, alpha: float = 0.1):
         self.alpha = alpha
         super().__init__(k)

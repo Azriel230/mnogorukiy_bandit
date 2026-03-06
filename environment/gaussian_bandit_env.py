@@ -2,8 +2,6 @@ import numpy as np
 
 
 class GaussianBanditEnv:
-
-
     def __init__(self,
                  k: int = 10,
                  q_mean: float = 0.0,

@@ -2,6 +2,7 @@ import numpy as np
 from agents import Agent
 
 class UCBAgent(Agent):
+
     def __init__(self, k: int, c: float = 1.4142): # c ~ sqrt(2)
         self.c = c
         super().__init__(k)
@@ -19,12 +20,9 @@ class UCBAgent(Agent):
             
         ucb_values = np.zeros(self.k)
         for action in range(self.k):
-            bonus = self.c * np.sqrt(np.log(t) / self.counts[action])
-            ucb_values[action] = self.values[action] + bonus
-
-        ucb_max = np.max(ucb_values)
-        best_actions = np.where(ucb_values == ucb_max)
-        action = np.random.choice(best_actions)
+            ucb_values[action] = self.values[action] + self.c * np.sqrt(np.log(t) / self.counts[action])
+        
+        action = np.argmax(ucb_values)
 
         return action
     

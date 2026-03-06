@@ -2,6 +2,7 @@ import numpy as np
 from agents import Agent
 
 class ThompsonSamplingAgent(Agent):
+    
     def __init__(self, k: int, tau: float = 1.0):
         self.tau = tau
         super().__init__(k)
@@ -59,6 +60,6 @@ class ThompsonSamplingAgent(Agent):
         
         return pdf
     
-    
+
     def __str__(self) -> str:
         return f"Thompson (τ={self.tau})"
